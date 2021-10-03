@@ -5,7 +5,7 @@
   "author": "davidsharp <hello@davidsharp.codes>",
   "license": "MIT",
   "engines": {
-    "node": "14.x"
+    "node": "16.x"
   },
   "scripts": {
     "start": "node index.js"
