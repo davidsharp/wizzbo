@@ -1,6 +1,15 @@
 // Require the necessary discord.js classes
 const { Client, Intents } = require('discord.js');
-const { token } = require('./config.json')
+
+let config
+try {
+  config = JSON.parse(require('fs').readFileSync('./config.json'))
+}catch(e){
+  console.log('No config.json, using process.env')
+  config = process.env
+}
+
+const { token } = config
 
 const { collection } = require('./commands')
 
