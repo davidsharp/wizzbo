@@ -1,0 +1,10 @@
+{
+  "name": "wizzbo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "davidsharp <hello@davidsharp.codes>",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^13.1.0"
+  }
+}
