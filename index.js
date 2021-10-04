@@ -1,5 +1,8 @@
 // Require the necessary discord.js classes
-const { Client, Intents } = require('discord.js');
+const { Client, Intents } = require('discord.js')
+
+// run express web app server
+require('./webserver')
 
 let config
 try {
