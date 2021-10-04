@@ -6,7 +6,7 @@ const UserInfo = require('./userInfo')
 const Scry = require('./scry')
 
 const commands = [
-  //Ping,
+  Ping,
   Scry,
   ServerInfo,
   UserInfo,
