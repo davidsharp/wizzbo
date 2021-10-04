@@ -22,10 +22,13 @@ module.exports = {
     const question = interaction.options.getString('question')
     const fate = interaction.options.getMentionable('fate')
 
-    console.log(question,fate)
+    if(fate)console.log(fate)
+
+    let fated
+    if(fate) fated = fate.nickname || (fate.user && fate.user.username) || 'fated'
 
     if(question) await interaction.reply(`_"${question}"_ | wizzbo says ${responses[Math.floor(Math.random()*responses.length)]}`)
-    else if(fate) await interaction.reply(`wizzbo is unsure of the fate of ${fate.name}`);
+    else if(fate) await interaction.reply(`wizzbo is unsure of the fate of ${fated}`);
     else await interaction.reply({content:`wizzbo needs more info (add a question or a user)`,ephemeral:true});
   },
 }
