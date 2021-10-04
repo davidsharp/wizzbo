@@ -3,11 +3,21 @@ const fraktur = require('fraktur');
 
 const responses = [
   `it is doubtful`,
+  `it is unlikely`,
+  `it is likely`,
+  `wisdom confirms it`,
+  `wizzbo would doubt it`,
+  `the answer is as you might expect`,
+  `all is not as it seems`,
   `absolutely`,
+  `absolutely not`,
   `it is unclear to wizzbo`,
-  `ask me like you mean it`,
-  `look inside yourself to find the answer`,
+  `it is beyond even wizzbo's understanding`,
+  `ask your question again with less doubt`,
+  `look within yourself to find the answer`,
   `perhaps another has the answer`,
+  `wizzbo distrusts what you would do with this information`,
+  `wizzbo has faith that you will find your own answer`,
 ]
 
 const fates = [
