@@ -39,7 +39,7 @@ module.exports = {
     if(fate) fated = fate.name || fate.nickname || (fate.user && fate.user.username) || 'fated'
 
     if(question) await interaction.reply(`_"${question}"_ | wizzbo says "${fraktur(responses[Math.floor(Math.random()*responses.length)])}""`)
-    else if(fate) await interaction.reply(fates[Math.floor(Math.random()*fates.length)](fated));
+    else if(fate) await interaction.reply(`${fraktur(fates[Math.floor(Math.random()*fates.length)](fated))}`);
     else await interaction.reply({content:`wizzbo needs more info (add a question or a user)`,ephemeral:true});
   },
 }
