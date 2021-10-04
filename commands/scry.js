@@ -25,7 +25,7 @@ module.exports = {
     if(fate)console.log(fate)
 
     let fated
-    if(fate) fated = fate.nickname || (fate.user && fate.user.username) || 'fated'
+    if(fate) fated = fate.name || fate.nickname || (fate.user && fate.user.username) || 'fated'
 
     if(question) await interaction.reply(`_"${question}"_ | wizzbo says ${responses[Math.floor(Math.random()*responses.length)]}`)
     else if(fate) await interaction.reply(`wizzbo is unsure of the fate of ${fated}`);
