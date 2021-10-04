@@ -20,12 +20,12 @@ module.exports = {
     .addMentionableOption(option => option.setName('fate').setDescription('discover the fate of whom?')),
   execute: async interaction => {
     const question = interaction.options.getString('question')
-    const fate = interaction.options.getString('fate')
+    const fate = interaction.options.getMentionable('fate')
 
     console.log(question,fate)
 
     if(question) await interaction.reply(`_"${question}"_ | wizzbo says ${responses[Math.floor(Math.random()*responses.length)]}`)
-    else if(fate) await interaction.reply(`wizzbo is unsure of their fate`);
+    else if(fate) await interaction.reply(`wizzbo is unsure of the fate of ${fate.name}`);
     else await interaction.reply({content:`wizzbo needs more info (add a question or a user)`,ephemeral:true});
   },
 }
