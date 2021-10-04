@@ -4,6 +4,13 @@ wizzbo is a Discord bot (running in node, using discord.js), it doesn't do anyth
 
 maybe it'll have cool features one day or a single specific purpose, but for now, nope
 
+## commands
+
+### /scry
+scry has two options:
+- question | takes a string and replies, magic 8-ball style
+- fate | takes a mentionable (user/role) and gives a vague/silly fortune
+
 ## running wizzbo
 
 If you're running wizzbo locally, it looks for a `config.json`, which is gitignored, however if (like me) you're running wizzbo from Glitch, it relies on environment variables if a config file is not found. To run it'll need:
