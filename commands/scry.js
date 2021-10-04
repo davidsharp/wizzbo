@@ -10,6 +10,16 @@ const responses = [
   `perhaps another has the answer`,
 ]
 
+const fates = [
+  //fated => `wizzbo is unsure of the fate of ${fated}`,
+  fated => `the fate of _${fated}_ looks ${fatedAdjectives[Math.floor(Math.random()*fatedAdjectives.length)]}`,
+  //fated => `_${fated}_ looks to be...`,
+]
+
+const fatedAdjectives = [
+  `bleak`,`promising`,`surprising`
+]
+
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('scry')
@@ -29,7 +39,7 @@ module.exports = {
     if(fate) fated = fate.name || fate.nickname || (fate.user && fate.user.username) || 'fated'
 
     if(question) await interaction.reply(`_"${question}"_ | wizzbo says "${fraktur(responses[Math.floor(Math.random()*responses.length)])}""`)
-    else if(fate) await interaction.reply(`wizzbo is unsure of the fate of ${fated}`);
+    else if(fate) await interaction.reply(fates[Math.floor(Math.random()*fates.length)]);
     else await interaction.reply({content:`wizzbo needs more info (add a question or a user)`,ephemeral:true});
   },
 }
