@@ -21,6 +21,7 @@ client.commands = collection
 // When the client is ready, run this code (only once)
 client.once('ready', () => {
   console.log('Ready!');
+  client.user.setAvatar(require('path').resolve(__dirname,'./wizzbo.png'));
 });
 
 client.on('interactionCreate', async interaction => {
