@@ -39,4 +39,7 @@ module.exports = {
     else if(fate) await interaction.reply(`${fraktur(fates[Math.floor(Math.random()*fates.length)](fated))}`);
     else await interaction.reply({content:`wizzbo needs more info (add a question or a user)`,ephemeral:true});
   },
+  failure: async interaction => {
+    await interaction.reply({content:fraktur(`wizzbo cannot see the future right now`),ephemeral:true})
+  }
 }
