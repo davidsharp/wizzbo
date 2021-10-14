@@ -40,4 +40,7 @@ const vote = {
   }
 }
 
+// TODO, check number of votes
+const votestatus = {}
+
 module.exports = { vote, setupvote, endvote }
