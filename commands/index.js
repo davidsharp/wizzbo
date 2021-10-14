@@ -4,12 +4,16 @@ const Ping = require('./ping')
 const ServerInfo = require('./serverInfo')
 const UserInfo = require('./userInfo')
 const Scry = require('./scry')
+const { vote, setupvote, endvote } = require('./vote')
 
 const commands = [
   Ping,
   Scry,
   ServerInfo,
   UserInfo,
+  vote,
+  setupvote,
+  endvote,
 ]
 
 const collection = new Collection()
