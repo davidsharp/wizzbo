@@ -36,7 +36,7 @@ ${poll.votesCast} vote(s) have been cast`
 // slash commands
 const setupvote = {
   subcommand: subcommand => subcommand
-    .setName('setupvote')
+    .setName('setup')
     .setDescription('sets up an anonymous poll `/vote` to participate')
     .addIntegerOption(option => option.setName('players').setDescription('how many people are voting?').setRequired(true))
     .addIntegerOption(option => option.setName('entries').setDescription('how many items to vote from?').setRequired(true))
@@ -61,7 +61,7 @@ const setupvote = {
 // provide a way to return results without the vote "finishing"
 const endvote = {
   subcommand: subcommand => subcommand
-    .setName('endvote')
+    .setName('end')
     .setDescription('ends anonymous poll, and returns results'),
   execute: async interaction => {
     // TODO - actually end poll, don't allow any more votes
@@ -72,13 +72,13 @@ const endvote = {
 
 const castvote = {
   subcommand: subcommand => subcommand
-    .setName('castvote')
+    .setName('cast')
     .setDescription('anonymously vote in the current poll')
-    .addIntegerOption(option => option.setName('castvote').setDescription('vote in the current poll').setRequired(true))
+    .addIntegerOption(option => option.setName('entry').setDescription('vote in the current poll').setRequired(true))
     //.addIntegerOption(option => option.setName('place').setDescription('position to be voted for'))
     ,
   execute: async interaction => {
-    const vote = interaction.options.getInteger('castvote')
+    const vote = interaction.options.getInteger('entry')
 
     console.log(interaction.user,interaction.guildId)
 
@@ -102,7 +102,7 @@ const castvote = {
 
 const votestatus = {
   subcommand: subcommand => subcommand
-    .setName('votestatus')
+    .setName('status')
     .setDescription('get current poll status'),
   execute: async interaction => {
     await interaction.reply({content:pollStatus(poll),ephemeral:true})
@@ -123,10 +123,10 @@ const vote = {
     console.log(subcommand)
     let command
     switch(subcommand){
-      case 'castvote': command = castvote; break;
-      case 'votestatus': command = votestatus; break;
-      case 'endvote': command = endvote; break;
-      case 'setupvote': command = setupvote; break;
+      case 'cast': command = castvote; break;
+      case 'status': command = votestatus; break;
+      case 'end': command = endvote; break;
+      case 'setup': command = setupvote; break;
     }
     if(command) await command.execute(interaction)
   }
