@@ -3,6 +3,31 @@ const { SlashCommandBuilder } = require('@discordjs/builders')
 // rough placeholder storage
 let poll = {}
 
+// functions
+const initPoll = ({players,entries,votes,weighted,guildId}) => {
+  poll = {players,entries,votes,weighted,guildId}
+}
+
+const pollComplete = poll => {
+  const results = Object.values(poll.voters).reduce(
+    (acc,votes)=>{
+      votes.forEach(
+        (c,i)=>{
+          if(!acc[c])acc[c]==0
+          if(poll.weighted) acc[c]++ // TODO - handle weighting
+          else acc[c]++
+        }
+      )
+      return acc
+    },
+    {}
+  )
+  const ranking = Object.entries(results).sort((a,b)=>b[1]-a[1])
+  return `The votes are in!
+The winner is entry ${ranking[0][0]}!`
+}
+
+// slash commands
 const setupvote = {
   data: new SlashCommandBuilder()
     .setName('setupvote')
@@ -18,7 +43,7 @@ const setupvote = {
     const weighted = !!interaction.options.getBoolean('weighted')
     const { guildId } = interaction
 
-    poll = {players,entries,votes,weighted,guildId}
+    initPoll({players,entries,votes,weighted,guildId})
 
     console.log(poll)
 
@@ -60,8 +85,10 @@ const vote = {
 
     console.log(poll)
 
+    // TODO - handle repeat votes for the same person
+
     await interaction.reply({content:`Thanks, you voted for ${vote}, you have ${poll.votes-poll.voters[interaction.user].length} votes left`,ephemeral:true})
-    if(poll.votesCast == poll.players * poll.votes) await interaction.followUp({content:`Poll complete!`,ephemeral:false})
+    if(poll.votesCast == poll.players * poll.votes) await interaction.followUp({content:pollComplete(poll),ephemeral:false})
   }
 }
 
