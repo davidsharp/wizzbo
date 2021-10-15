@@ -11,7 +11,7 @@ module.exports = {
     .setName('enchant')
     .setDescription('enchant a user ✨')
     // mentionable rather than user, as it gives guild specific info
-    .addMentionableOption(option => option.setName('fellow').setDescription('enchant whom?')),
+    .addMentionableOption(option => option.setName('fellow').setDescription('enchant whom?').setRequired(true)),
   execute: async (interaction) => {
     const fellow = interaction.options.getMentionable('fellow')
 
