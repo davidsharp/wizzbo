@@ -13,9 +13,6 @@ const setupvote = {
     const votes = (interaction.options.getInteger('votes') || 2)
 
     await interaction.reply({content:`wizzbo needs more info (add a question or a user)`,ephemeral:true});
-  },
-  failure: async interaction => {
-    await interaction.reply({content:fraktur(`wizzbo cannot see the future right now`),ephemeral:true})
   }
 }
 
@@ -31,12 +28,12 @@ const vote = {
   data: new SlashCommandBuilder()
     .setName('vote')
     .setDescription('anonymously vote in the current poll')
-    .addIntegerOption(option => option.setName('vote').setDescription('vote in the current poll').setRequired(true)),
+    .addStringOption(option => option.setName('vote').setDescription('vote in the current poll').setRequired(true)),
   execute: async interaction => {
-    await interaction.reply({content:`wizzbo needs more info (add a question or a user)`,ephemeral:true});
-  },
-  failure: async interaction => {
-    await interaction.reply({content:fraktur(`wizzbo cannot see the future right now`),ephemeral:true})
+    const vote = interaction.options.getInteger('vote')
+
+    // TODO - say how many votes are left
+    await interaction.reply({content:fraktur(`Thanks, you voted for ${vote}`),ephemeral:true})
   }
 }
 
