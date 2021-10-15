@@ -86,17 +86,19 @@ const castvote = {
 
     if(!poll.voters[interaction.user]) poll.voters[interaction.user] = []
 
-    poll.voters[interaction.user].push(vote)
+    if(poll.voters[interaction.user].includes(vote)){
+      await interaction.reply({content:`Sorry, you've already voted for ${vote}. Please vote for a different entry, you have ${poll.votes-poll.voters[interaction.user].length} vote(s) left`,ephemeral:true})
+    } else{
+      poll.voters[interaction.user].push(vote)
 
-    if(!poll.votesCast) poll.votesCast = 0
-    poll.votesCast++
+      if(!poll.votesCast) poll.votesCast = 0
+      poll.votesCast++
 
-    console.log(poll)
+      await interaction.reply({content:`Thanks, you voted for ${vote}, you have ${poll.votes-poll.voters[interaction.user].length} vote(s) left`,ephemeral:true})
+      if(poll.votesCast == poll.players * poll.votes) await interaction.followUp({content:pollComplete(poll),ephemeral:false})
+    }
 
-    // TODO - handle repeat votes for the same person
-
-    await interaction.reply({content:`Thanks, you voted for ${vote}, you have ${poll.votes-poll.voters[interaction.user].length} vote(s) left`,ephemeral:true})
-    if(poll.votesCast == poll.players * poll.votes) await interaction.followUp({content:pollComplete(poll),ephemeral:false})
+    
   }
 }
 
