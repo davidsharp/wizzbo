@@ -1,5 +1,8 @@
 const { SlashCommandBuilder } = require('@discordjs/builders')
 
+// rough placeholder storage
+let poll = {}
+
 const setupvote = {
   data: new SlashCommandBuilder()
     .setName('setupvote')
@@ -13,6 +16,11 @@ const setupvote = {
     const entries = interaction.options.getInteger('entries')
     const votes = (interaction.options.getInteger('votes') || 2)
     const weighted = !!interaction.options.getBoolean('weighted')
+    const { guildId } = interaction
+
+    poll = {players,entries,votes,weighted,guildId}
+
+    console.log(poll)
 
     await interaction.reply({content:`[Input test:] players (${players}), entries (${entries}), votes (${votes}), weighted (${weighted})`,ephemeral:true});
   }
@@ -36,8 +44,18 @@ const vote = {
   execute: async interaction => {
     const vote = interaction.options.getInteger('vote')
 
+    console.log(interaction.user,interaction.guildId)
+
+    if(!poll.voters)poll.voters = {}
+
+    if(!poll.voters[interaction.user]) poll.voters[interaction.user] = []
+
+    poll.voters[interaction.user].push(vote)
+
+    console.log(poll)
+
     // TODO - say how many votes are left
-    await interaction.reply({content:`Thanks, you voted for ${vote}`,ephemeral:true})
+    await interaction.reply({content:`Thanks, you voted for ${vote}, you have ${poll.votes-poll.voters[interaction.user].length} votes left`,ephemeral:true})
   }
 }
 
