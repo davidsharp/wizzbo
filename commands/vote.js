@@ -27,6 +27,12 @@ const pollComplete = poll => {
 The winner is entry ${ranking[0][0]}!`
 }
 
+const pollStatus = poll => {
+  return `Current poll status:
+${Object.keys(poll.voters).length}/${poll.players} people have voted
+${poll.votesCast} vote(s) have been cast`
+}
+
 // slash commands
 const setupvote = {
   data: new SlashCommandBuilder()
@@ -57,8 +63,10 @@ const endvote = {
   data: new SlashCommandBuilder()
     .setName('endvote')
     .setDescription('ends anonymous poll, and returns results'),
-  execute: async ()=>{
-    await interaction.reply({content:`vote ended [TODO: show results]`})
+  execute: async interaction => {
+    // TODO - actually end poll, don't allow any more votes
+    poll.ended = true
+    await interaction.reply({content:pollComplete(poll)})
   }
 }
 
@@ -87,12 +95,19 @@ const vote = {
 
     // TODO - handle repeat votes for the same person
 
-    await interaction.reply({content:`Thanks, you voted for ${vote}, you have ${poll.votes-poll.voters[interaction.user].length} votes left`,ephemeral:true})
+    await interaction.reply({content:`Thanks, you voted for ${vote}, you have ${poll.votes-poll.voters[interaction.user].length} vote(s) left`,ephemeral:true})
     if(poll.votesCast == poll.players * poll.votes) await interaction.followUp({content:pollComplete(poll),ephemeral:false})
   }
 }
 
-// TODO, check number of votes
-const votestatus = {}
+const votestatus = {
+  data: new SlashCommandBuilder()
+    .setName('votestatus')
+    .setDescription('get current poll status'),
+  execute: async interaction => {
+    await interaction.reply({content:pollStatus(poll),ephemeral:true})
+  }
+}
 
-module.exports = { vote, setupvote, endvote }
+// todo, turn into subcommands?
+module.exports = { vote, setupvote, endvote, votestatus }
