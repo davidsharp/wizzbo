@@ -6,11 +6,13 @@ const setupvote = {
     .setDescription('sets up an anonymous poll `/vote` to participate')
     .addIntegerOption(option => option.setName('players').setDescription('how many people are voting?').setRequired(true))
     .addIntegerOption(option => option.setName('stories').setDescription('how many items to vote from?').setRequired(true))
-    .addIntegerOption(option => option.setName('votes').setDescription('[optional, default:2] how many votes per person?')),
+    .addIntegerOption(option => option.setName('votes').setDescription('[optional, default:2] how many votes per person?'))
+    .addBooleanOption(option => option.setName('weighted').setDescription('[optional, default:false] are votes weighted (or worth equal)?')),
   execute: async interaction => {
     const players = interaction.options.getInteger('players')
     const stories = interaction.options.getInteger('stories')
     const votes = (interaction.options.getInteger('votes') || 2)
+    const weighted = !!interaction.options.getBoolean('weighted')
 
     await interaction.reply({content:`wizzbo needs more info (add a question or a user)`,ephemeral:true});
   }
@@ -28,7 +30,7 @@ const vote = {
   data: new SlashCommandBuilder()
     .setName('vote')
     .setDescription('anonymously vote in the current poll')
-    .addStringOption(option => option.setName('vote').setDescription('vote in the current poll').setRequired(true)),
+    .addIntegerOption(option => option.setName('vote').setDescription('vote in the current poll').setRequired(true)),
   execute: async interaction => {
     const vote = interaction.options.getInteger('vote')
 
