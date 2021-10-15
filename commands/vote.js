@@ -35,7 +35,7 @@ ${poll.votesCast} vote(s) have been cast`
 
 // slash commands
 const setupvote = {
-  data: new SlashCommandBuilder()
+  subcommand: subcommand => subcommand
     .setName('setupvote')
     .setDescription('sets up an anonymous poll `/vote` to participate')
     .addIntegerOption(option => option.setName('players').setDescription('how many people are voting?').setRequired(true))
@@ -60,7 +60,7 @@ const setupvote = {
 
 // provide a way to return results without the vote "finishing"
 const endvote = {
-  data: new SlashCommandBuilder()
+  subcommand: subcommand => subcommand
     .setName('endvote')
     .setDescription('ends anonymous poll, and returns results'),
   execute: async interaction => {
@@ -70,15 +70,15 @@ const endvote = {
   }
 }
 
-const vote = {
-  data: new SlashCommandBuilder()
-    .setName('vote')
+const castvote = {
+  subcommand: subcommand => subcommand
+    .setName('castvote')
     .setDescription('anonymously vote in the current poll')
-    .addIntegerOption(option => option.setName('vote').setDescription('vote in the current poll').setRequired(true))
+    .addIntegerOption(option => option.setName('castvote').setDescription('vote in the current poll').setRequired(true))
     //.addIntegerOption(option => option.setName('place').setDescription('position to be voted for'))
     ,
   execute: async interaction => {
-    const vote = interaction.options.getInteger('vote')
+    const vote = interaction.options.getInteger('castvote')
 
     console.log(interaction.user,interaction.guildId)
 
@@ -101,7 +101,7 @@ const vote = {
 }
 
 const votestatus = {
-  data: new SlashCommandBuilder()
+  subcommand: subcommand => subcommand
     .setName('votestatus')
     .setDescription('get current poll status'),
   execute: async interaction => {
@@ -109,5 +109,28 @@ const votestatus = {
   }
 }
 
+const vote = {
+  data: new SlashCommandBuilder()
+    .setName('vote')
+    .setDescription('poll stuff')
+    .addSubcommand(castvote.subcommand)
+    .addSubcommand(setupvote.subcommand)
+    .addSubcommand(votestatus.subcommand)
+    .addSubcommand(endvote.subcommand),
+    //.addSubcommandGroup() //'manage' as a separate group?
+  execute: async interaction => {
+    const subcommand = interaction.options.getSubcommand()
+    console.log(subcommand)
+    let command
+    switch(subcommand){
+      case 'castvote': command = castvote; break;
+      case 'votestatus': command = votestatus; break;
+      case 'endvote': command = endvote; break;
+      case 'setupvote': command = setupvote; break;
+    }
+    if(command) await command.execute(interaction)
+  }
+}
+
 // todo, turn into subcommands?
-module.exports = { vote, setupvote, endvote, votestatus }
+module.exports = vote
