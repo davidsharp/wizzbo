@@ -41,7 +41,7 @@ This poll has ended`:''}`
 const setupvote = {
   subcommand: subcommand => subcommand
     .setName('setup')
-    .setDescription('sets up an anonymous poll `/vote` to participate')
+    .setDescription('sets up an anonymous poll `/vote cast` to participate')
     .addIntegerOption(option => option.setName('players').setDescription('how many people are voting?').setRequired(true))
     .addIntegerOption(option => option.setName('entries').setDescription('how many items to vote from?').setRequired(true))
     .addIntegerOption(option => option.setName('votes').setDescription('[optional, default:3] how many votes per person?'))
