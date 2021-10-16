@@ -1,28 +1,14 @@
 const { SlashCommandBuilder } = require('@discordjs/builders')
 
-const fs = require('fs/promises')
 const path = require('path')
-const loadGuildJson = async id => {
-  try{
-    const json = await fs.readFile(path.resolve(__dirname,`${id}.json`))
-    let polls = JSON.parse(json)
-  } catch(e){
-    
-  }
-}
-const saveGuildJson = async id => {
-  await fs.writeFile(path.resolve(__dirname,'..','poll_storage',`${id}.json`),JSON.stringify(polls))
-}
-
-// rough placeholder storage
-let polls = {}
-
-// store channel?
+const Storage = require('node-storage')
+const store = new Storage(path.resolve(__dirname,'..','poll_storage',`store.json`))
 
 // functions
 const initPoll = ({players,entries,votes,weighted,guildId,channelId}) => {
+  const polls = store.get(guildId) || {}
   polls[channelId] = {players,entries,votes,weighted,guildId,channelId}
-  saveGuildJson(guildId)
+  store.put(guildId,polls)
 }
 
 const pollComplete = poll => {
@@ -47,7 +33,8 @@ The winner is entry ${ranking[0][0]}!`
 const pollStatus = poll => {
   return `Current poll status:
 ${Object.keys(poll.voters).length}/${poll.players} people have voted
-${poll.votesCast} vote(s) have been cast`
+${poll.votesCast} vote(s) have been cast${poll.ended?`
+This poll has ended`:''}`
 }
 
 // slash commands
@@ -68,9 +55,6 @@ const setupvote = {
 
     initPoll({players,entries,votes,weighted,guildId,channelId})
 
-    console.log(polls)
-
-    //await interaction.reply({content:`[Input test:] players (${players}), entries (${entries}), votes (${votes}), weighted (${weighted})`,ephemeral:true});
     await interaction.reply({content:`A poll has been created, please vote from 1-${entries}, you have ${votes} vote(s)${weighted && votes>1?', please vote starting with your highest':''}`});
   }
 }
@@ -81,8 +65,10 @@ const endvote = {
     .setName('end')
     .setDescription('ends anonymous poll, and returns results'),
   execute: async interaction => {
+    const polls = store.get(interaction.guildId) || {}
     // TODO - actually end poll, don't allow any more votes
     polls[interaction.channelId].ended = true
+    store.put(interaction.guildId,polls)
     await interaction.reply({content:pollComplete(polls[interaction.channelId])})
   }
 }
@@ -97,7 +83,7 @@ const castvote = {
   execute: async interaction => {
     const vote = interaction.options.getInteger('entry')
 
-    const poll = polls[interaction.channelId]
+    const poll = store.get(`${interaction.guildId}.${interaction.channelId}`) || {}
 
     console.log(interaction.user,interaction.guildId)
 
@@ -113,8 +99,13 @@ const castvote = {
       if(!poll.votesCast) poll.votesCast = 0
       poll.votesCast++
 
+      const finalVote = poll.votesCast == poll.players * poll.votes
+      if(finalVote) poll.ended = true
+
+      store.put(`${interaction.guildId}.${interaction.channelId}`,poll)
+
       await interaction.reply({content:`Thanks, you voted for ${vote}, you have ${poll.votes-poll.voters[interaction.user].length} vote(s) left`,ephemeral:true})
-      if(poll.votesCast == poll.players * poll.votes) await interaction.followUp({content:pollComplete(poll),ephemeral:false})
+      if(finalVote) await interaction.followUp({content:pollComplete(poll),ephemeral:false})
     }
 
     
@@ -126,6 +117,7 @@ const votestatus = {
     .setName('status')
     .setDescription('get current poll status'),
   execute: async interaction => {
+    const polls = store.get(interaction.guildId) || {}
     await interaction.reply({content:pollStatus(polls[interaction.channelId]),ephemeral:true})
   }
 }
