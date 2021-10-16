@@ -4,8 +4,8 @@ const { SlashCommandBuilder } = require('@discordjs/builders')
 let poll = {}
 
 // functions
-const initPoll = ({players,entries,votes,weighted,guildId}) => {
-  poll = {players,entries,votes,weighted,guildId}
+const initPoll = ({players,entries,votes,weighted,guildId,channelId}) => {
+  poll = {players,entries,votes,weighted,guildId,channelId}
 }
 
 const pollComplete = poll => {
@@ -47,9 +47,9 @@ const setupvote = {
     const entries = interaction.options.getInteger('entries')
     const votes = (interaction.options.getInteger('votes') || 3)
     const weighted = !!interaction.options.getBoolean('weighted')
-    const { guildId } = interaction
+    const { guildId, channelId } = interaction
 
-    initPoll({players,entries,votes,weighted,guildId})
+    initPoll({players,entries,votes,weighted,guildId,channelId})
 
     console.log(poll)
 
