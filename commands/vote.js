@@ -1,5 +1,19 @@
 const { SlashCommandBuilder } = require('@discordjs/builders')
 
+const fs = require('fs/promises')
+const path = require('path')
+const loadGuildJson = async id => {
+  try{
+    const json = await fs.readFile(path.resolve(__dirname,`${id}.json`))
+    let poll = JSON.parse(json)
+  } catch(e){
+    
+  }
+}
+const saveGuildJson = async id => {
+  await fs.writeFile(JSON.stringify(poll),path.resolve(__dirname,`${id}.json`))
+}
+
 // rough placeholder storage
 let polls = {}
 
