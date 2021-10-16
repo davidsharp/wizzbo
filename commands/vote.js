@@ -5,13 +5,13 @@ const path = require('path')
 const loadGuildJson = async id => {
   try{
     const json = await fs.readFile(path.resolve(__dirname,`${id}.json`))
-    let poll = JSON.parse(json)
+    let polls = JSON.parse(json)
   } catch(e){
     
   }
 }
 const saveGuildJson = async id => {
-  await fs.writeFile(JSON.stringify(poll),path.resolve(__dirname,`${id}.json`))
+  await fs.writeFile(path.resolve(__dirname,'..','poll_storage',`${id}.json`),JSON.stringify(polls))
 }
 
 // rough placeholder storage
@@ -22,6 +22,7 @@ let polls = {}
 // functions
 const initPoll = ({players,entries,votes,weighted,guildId,channelId}) => {
   polls[channelId] = {players,entries,votes,weighted,guildId,channelId}
+  saveGuildJson(guildId)
 }
 
 const pollComplete = poll => {
