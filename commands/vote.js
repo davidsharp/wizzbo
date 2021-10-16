@@ -1,11 +1,13 @@
 const { SlashCommandBuilder } = require('@discordjs/builders')
 
 // rough placeholder storage
-let poll = {}
+let polls = {}
+
+// store channel?
 
 // functions
 const initPoll = ({players,entries,votes,weighted,guildId,channelId}) => {
-  poll = {players,entries,votes,weighted,guildId,channelId}
+  polls[channelId] = {players,entries,votes,weighted,guildId,channelId}
 }
 
 const pollComplete = poll => {
@@ -51,7 +53,7 @@ const setupvote = {
 
     initPoll({players,entries,votes,weighted,guildId,channelId})
 
-    console.log(poll)
+    console.log(polls)
 
     //await interaction.reply({content:`[Input test:] players (${players}), entries (${entries}), votes (${votes}), weighted (${weighted})`,ephemeral:true});
     await interaction.reply({content:`A poll has been created, please vote from 1-${entries}, you have ${votes} vote(s)${weighted && votes>1?', please vote starting with your highest':''}`});
@@ -65,8 +67,8 @@ const endvote = {
     .setDescription('ends anonymous poll, and returns results'),
   execute: async interaction => {
     // TODO - actually end poll, don't allow any more votes
-    poll.ended = true
-    await interaction.reply({content:pollComplete(poll)})
+    polls[interaction.channelId].ended = true
+    await interaction.reply({content:pollComplete(polls[interaction.channelId])})
   }
 }
 
@@ -79,6 +81,8 @@ const castvote = {
     ,
   execute: async interaction => {
     const vote = interaction.options.getInteger('entry')
+
+    const poll = polls[interaction.channelId]
 
     console.log(interaction.user,interaction.guildId)
 
@@ -107,7 +111,7 @@ const votestatus = {
     .setName('status')
     .setDescription('get current poll status'),
   execute: async interaction => {
-    await interaction.reply({content:pollStatus(poll),ephemeral:true})
+    await interaction.reply({content:pollStatus(polls[interaction.channelId]),ephemeral:true})
   }
 }
 
