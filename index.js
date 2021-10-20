@@ -14,4 +14,4 @@ const { collection } = require('./commands')
 const createClient = require('./createClient')
 
 createClient({name:'wizzbo',config,collection})
-//createClient({name:'kwivo',config,collection})
+if(config.kwivo)createClient({name:'kwivo',JSON.parse(config.kwivo),collection})
