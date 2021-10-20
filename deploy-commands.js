@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
-const { clientId, guildId, token } = require('./config.json');
+const config = require('./config.json');
 
 const { commands } = require('./commands')
 
@@ -10,6 +10,7 @@ const argv = require('minimist')(process.argv.slice(2));
 if(argv.h){
   console.log(`deploy-commands.js (deploys bot commands):
 -h ~ shows this help message
+-s/--sub=[name] ~ deploy for sub-bot
 -a / --all ~ deploys all commands (default)
 [any named command] ~ deploys only listed commands, eg: \`node deploy-commands scry\``);
   return;
@@ -23,6 +24,11 @@ else argv._.forEach(
     if(found)deployedCommands.push(found)
   }
 )
+
+const { clientId, guildId, token } = (
+  (argv.s||argv.sub)&&config[argv.s||argv.sub]?
+    config[argv.s||argv.sub]:config
+  )
 
 const rest = new REST({ version: '9' }).setToken(token);
 
