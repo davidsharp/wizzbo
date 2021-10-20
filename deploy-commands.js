@@ -26,7 +26,7 @@ else argv._.forEach(
 
 const rest = new REST({ version: '9' }).setToken(token);
 
-rest.put(Routes.applicationGuildCommands(clientId, guildId), { body: commands })
+rest.put(Routes.applicationGuildCommands(clientId, guildId), { body: deployedCommands })
   .then(() => console.log(`Successfully registered application commands:
   ${deployedCommands.map(c=>c.name).join('\n  ')}`))
   .catch(console.error);
