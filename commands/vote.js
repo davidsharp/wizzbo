@@ -42,7 +42,8 @@ const pollStatus = poll => {
   return `Current poll status:
 ${Object.keys(poll.voters).length}/${poll.players} people have voted
 ${poll.votesCast} vote(s) have been cast${poll.ended?`
-This poll has ended`:''}`
+This poll has ended, the results were:
+_${pollComplete(poll)}_`:''}`
 }
 
 const calculateRankings = results => {
