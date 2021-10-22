@@ -16,7 +16,7 @@ const pollComplete = poll => {
     (acc,votes)=>{
       votes.forEach(
         (c,i)=>{
-          if(!acc[c])acc[c]==0
+          if(!acc[c])acc[c]=0
           if(poll.weighted) acc[c]++ // TODO - handle weighting
           else acc[c]++
         }
