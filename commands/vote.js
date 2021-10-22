@@ -28,10 +28,10 @@ const pollComplete = poll => {
   const rankings = calculateRankings(results)
   let resultText = 'The votes are in!\n'
   resultText += (rankings[0].entries.length===1?
-    `The winner is entry ${rankings[0].entries[0]} with ${rankings[0].votes} points`:
+    `The winner is entry #${rankings[0].entries[0]} with ${rankings[0].votes} points`:
     `Tied for 1st place with ${rankings[0].votes} points each are entries ${
-      rankings[0].entries.slice(0,-1).join(', ')
-    } and ${
+      rankings[0].entries.slice(0,-1).map(x=>`#${x}`).join(', ')
+    } and #${
       rankings[0].entries[rankings[0].entries.length-1]
     }`
   )
@@ -110,8 +110,8 @@ const castvote = {
 
     if(!poll.voters[interaction.user]) poll.voters[interaction.user] = []
 
-    if(false && poll.voters[interaction.user].includes(vote)){
-      await interaction.reply({content:`Sorry, you've already voted for ${vote}. Please vote for a different entry, you have ${poll.votes-poll.voters[interaction.user].length} vote(s) left`,ephemeral:true})
+    if(poll.voters[interaction.user].includes(vote)){
+      await interaction.reply({content:`Sorry, you've already voted for #${vote}. Please vote for a different entry, you have ${poll.votes-poll.voters[interaction.user].length} vote(s) left`,ephemeral:true})
     } else{
       poll.voters[interaction.user].push(vote)
 
@@ -123,7 +123,7 @@ const castvote = {
 
       store.put(`${interaction.guildId}.${interaction.channelId}`,poll)
 
-      await interaction.reply({content:`Thanks, you voted for ${vote}, you have ${poll.votes-poll.voters[interaction.user].length} vote(s) left`,ephemeral:true})
+      await interaction.reply({content:`Thanks, you voted for #${vote}, you have ${poll.votes-poll.voters[interaction.user].length} vote(s) left`,ephemeral:true})
       if(finalVote) await interaction.followUp({content:pollComplete(poll),ephemeral:false})
     }
 
