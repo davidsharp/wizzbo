@@ -29,7 +29,7 @@ const pollComplete = poll => {
   let resultText = 'The votes are in!\n'
   resultText += (rankings[0].entries.length===1?
     `The winner is entry #${rankings[0].entries[0]} with ${rankings[0].votes} points`:
-    `Tied for 1st place with ${rankings[0].votes} points each are entries ${
+    `Tied for ${ordinalify(1)} place with ${rankings[0].votes} points each are entries ${
       rankings[0].entries.slice(0,-1).map(x=>`#${x}`).join(', ')
     } and #${
       rankings[0].entries[rankings[0].entries.length-1]
@@ -54,6 +54,15 @@ const calculateRankings = results => {
     else places.push({votes:r[1],entries:[r[0]]})
   })
   return places
+}
+
+const ordinalify = i => {
+  const j = i % 10;
+  const k = i % 100;
+  return j == 1 && k != 11 ? `${i}st`:
+    j == 2 && k != 12 ? `${i}nd` :
+    j == 3 && k != 13 ? `${i}rd` :
+    `${i}th`
 }
 
 // slash commands
