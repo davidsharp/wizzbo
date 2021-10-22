@@ -25,9 +25,17 @@ const pollComplete = poll => {
     },
     {}
   )
-  const ranking = Object.entries(results).sort((a,b)=>b[1]-a[1])
-  return `The votes are in!
-The winner is entry ${ranking[0][0]}!`
+  const rankings = calculateRankings(results)
+  let resultText = 'The votes are in!\n'
+  resultText += (rankings[0].entries.length===1?
+    `The winner is entry ${rankings[0].entries[0]} with ${rankings[0].votes} points`:
+    `Tied for 1st place with ${rankings[0].votes} points each are entries ${
+      rankings[0].entries.slice(0,-1).join(', ')
+    } and ${
+      rankings[0].entries[rankings[0].entries.length-1]
+    }`
+  )
+  return resultText
 }
 
 const pollStatus = poll => {
@@ -35,6 +43,17 @@ const pollStatus = poll => {
 ${Object.keys(poll.voters).length}/${poll.players} people have voted
 ${poll.votesCast} vote(s) have been cast${poll.ended?`
 This poll has ended`:''}`
+}
+
+const calculateRankings = results => {
+  const sortedResults = Object.entries(results).sort((a,b)=>b[1]-a[1])
+  const places = []
+  sortedResults.forEach((r,i,a)=>{
+    if(places.length == 0) places.push({votes:r[1],entries:[r[0]]})
+    else if(r[1]==places[places.length-1].votes) places[places.length-1].entries.push(r[0])
+    else places.push({votes:r[1],entries:[r[0]]})
+  })
+  return places
 }
 
 // slash commands
@@ -91,7 +110,7 @@ const castvote = {
 
     if(!poll.voters[interaction.user]) poll.voters[interaction.user] = []
 
-    if(poll.voters[interaction.user].includes(vote)){
+    if(false && poll.voters[interaction.user].includes(vote)){
       await interaction.reply({content:`Sorry, you've already voted for ${vote}. Please vote for a different entry, you have ${poll.votes-poll.voters[interaction.user].length} vote(s) left`,ephemeral:true})
     } else{
       poll.voters[interaction.user].push(vote)
