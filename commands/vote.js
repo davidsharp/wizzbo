@@ -14,6 +14,7 @@ const initPoll = ({players,entries,votes,weighted,guildId,channelId}) => {
 const pollComplete = poll => {
   const results = Object.values(poll.voters).reduce(
     (acc,votes)=>{
+      // TODO - gets weighted points, also get votes
       votes.forEach(
         (c,i)=>{
           if(!acc[c])acc[c]=0
