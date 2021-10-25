@@ -66,6 +66,17 @@ const ordinalify = i => {
     `${i}th`
 }
 
+// TODO: not sure if this should be per entry or per player
+const weighting = (poll,votes,inc=1,offset=0) => {
+  // note: to get 5-3-1, inc = 2, offset = 1
+  //       to get 3-2-1, inc = 1, offset = 0 (default)
+  let value = (poll.votes * inc ) - offset
+  let points = 0
+  for(let i = votes;i>0;i--,value-=inc){
+    points+=value
+  }
+}
+
 // slash commands
 const setupvote = {
   subcommand: subcommand => subcommand
