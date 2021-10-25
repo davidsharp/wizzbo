@@ -25,14 +25,14 @@ else argv._.forEach(
   }
 )
 
-const { clientId, guildId, token } = (
+const { clientId, token } = (
   (argv.s||argv.sub)&&config[argv.s||argv.sub]?
     config[argv.s||argv.sub]:config
   )
 
 const rest = new REST({ version: '9' }).setToken(token);
 
-rest.put(Routes.applicationGuildCommands(clientId, guildId), { body: deployedCommands })
+rest.put(Routes.applicationCommands(clientId), { body: deployedCommands })
   .then(() => console.log(`Successfully registered application commands:
   ${deployedCommands.map(c=>c.name).join('\n  ')}`))
   .catch(console.error);
