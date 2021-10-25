@@ -17,8 +17,11 @@ const pollComplete = poll => {
       votes.forEach(
         (c,i)=>{
           if(!acc[c])acc[c]=0
-          if(poll.weighted) acc[c]++ // TODO - handle weighting
-          else acc[c]++
+          acc[c]+=weighting({
+            voteNo:i,
+            inc:poll.weighted?1:0,
+            votes:votes.length,
+          })
         }
       )
       return acc
@@ -66,15 +69,15 @@ const ordinalify = i => {
     `${i}th`
 }
 
-// TODO: not sure if this should be per entry or per player
-const weighting = (poll,votes,inc=1,offset=0) => {
+// working out the weighting per vote
+const weighting = ({voteNo,inc=1,offset=0,votes=3}) => {
   // note: to get 5-3-1, inc = 2, offset = 1
   //       to get 3-2-1, inc = 1, offset = 0 (default)
-  let value = (poll.votes * inc ) - offset
-  let points = 0
-  for(let i = votes;i>0;i--,value-=inc){
-    points+=value
-  }
+  return ((votes - voteNo) * inc) - offset
+  // inc = 2, offset = 1, votes = 3, voteNo =
+  // 0 -> 5 | (3 * 2) - 1 = 5
+  // 1 -> 3 | ((3 - 1) * 2) - 1 = 3
+  // 2 -> 1 | ((3 - 2) * 2) - 1 = 1
 }
 
 // slash commands
