@@ -1,3 +1,5 @@
 node_modules
 poll_storage
+
 config.json
+.DS_Store
