@@ -41,6 +41,14 @@ const pollComplete = poll => {
       rankings[0].entries[rankings[0].entries.length-1]
     }`
   )
+  resultText += '\n'+(rankings[1].entries.length===1?
+    `The runner-up is entry #${rankings[1].entries[0]} with ${rankings[1].votes} points`:
+    `Tied for ${ordinalify(2)} place with ${rankings[1].votes} points each are entries ${
+      rankings[1].entries.slice(0,-1).map(x=>`#${x}`).join(', ')
+    } and #${
+      rankings[1].entries[rankings[1].entries.length-1]
+    }`
+  )
   return resultText
 }
 
