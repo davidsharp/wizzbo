@@ -10,7 +10,7 @@
   "scripts": {
     "start": "node index.js",
     "deploy": "node deploy-commands.js",
-    "deploy-kwivo": "node deploy -s=kwivo vote"
+    "deploy-kwivo": "node deploy-commands.js -s=kwivo vote"
   },
   "dependencies": {
     "@discordjs/builders": "^0.6.0",
