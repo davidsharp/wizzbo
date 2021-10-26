@@ -108,7 +108,12 @@ const setupvote = {
 
     initPoll({players,entries,votes,weighted,guildId,channelId})
 
-    await interaction.reply({content:`A poll has been created, please vote from 1-${entries}, you have ${votes} vote(s)${weighted && votes>1?', please vote starting with your highest':''}`});
+    if(votes==3 && weighted)await interaction.reply({content:`**✨ Hello chaps, time to vote! ✨ 
+Please vote for your most favourite-est first, then your second most favourite, then your third.**
+You do this by typing in /vote cast and adding the entry number next to it before hitting return. You do this individually for vote (so ${votes} times).
+Good luck to all of our brave contenders`});
+    else await interaction.reply({content:`A poll has been created, please vote from 1-${entries}, you have ${votes} vote(s)${weighted && votes>1?', please vote starting with your highest':''}`});
+    
   }
 }
 
