@@ -98,12 +98,12 @@ const setupvote = {
     .addIntegerOption(option => option.setName('players').setDescription('how many people are voting?').setRequired(true))
     .addIntegerOption(option => option.setName('entries').setDescription('how many items to vote from?').setRequired(true))
     .addIntegerOption(option => option.setName('votes').setDescription('[optional, default:3] how many votes per person?'))
-    .addBooleanOption(option => option.setName('weighted').setDescription('[optional, default:false] are votes weighted (or worth equal)?')),
+    .addBooleanOption(option => option.setName('weighted').setDescription('[optional, default:true] are votes weighted (or worth equal)?')),
   execute: async interaction => {
     const players = interaction.options.getInteger('players')
     const entries = interaction.options.getInteger('entries')
     const votes = (interaction.options.getInteger('votes') || 3)
-    const weighted = !!interaction.options.getBoolean('weighted')
+    const weighted = interaction.options.getBoolean('weighted') ?? true
     const { guildId, channelId } = interaction
 
     initPoll({players,entries,votes,weighted,guildId,channelId})
