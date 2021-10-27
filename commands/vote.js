@@ -96,7 +96,7 @@ const setupvote = {
     .setName('setup')
     .setDescription('sets up an anonymous poll `/vote cast` to participate')
     .addIntegerOption(option => option.setName('players').setDescription('how many people are voting?').setRequired(true))
-    .addIntegerOption(option => option.setName('entries').setDescription('how many items to vote from?'))
+    .addIntegerOption(option => option.setName('entries').setDescription('[optional] how many items to vote from? (shows in message, but doesn\'t prevent misvotes)'))
     .addIntegerOption(option => option.setName('votes').setDescription('[optional, default:3] how many votes per person?'))
     .addBooleanOption(option => option.setName('weighted').setDescription('[optional, default:true] are votes weighted (or worth equal)?')),
   execute: async interaction => {
