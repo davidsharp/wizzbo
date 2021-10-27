@@ -96,7 +96,7 @@ const setupvote = {
     .setName('setup')
     .setDescription('sets up an anonymous poll `/vote cast` to participate')
     .addIntegerOption(option => option.setName('players').setDescription('how many people are voting?').setRequired(true))
-    .addIntegerOption(option => option.setName('entries').setDescription('how many items to vote from?').setRequired(true))
+    .addIntegerOption(option => option.setName('entries').setDescription('how many items to vote from?'))
     .addIntegerOption(option => option.setName('votes').setDescription('[optional, default:3] how many votes per person?'))
     .addBooleanOption(option => option.setName('weighted').setDescription('[optional, default:true] are votes weighted (or worth equal)?')),
   execute: async interaction => {
@@ -112,7 +112,7 @@ const setupvote = {
 Please vote for your most favourite-est first, then your second most favourite, then your third.**
 You do this by typing in /vote cast and adding the entry number next to it before hitting return. You do this individually for vote (so ${votes} times).
 Good luck to all of our brave contenders`});
-    else await interaction.reply({content:`A poll has been created, please vote from 1-${entries}, you have ${votes} vote(s)${weighted && votes>1?', please vote starting with your highest':''}`});
+    else await interaction.reply({content:`A poll has been created, ${entries?`please vote from 1-${entries},`:''} you have ${votes} vote(s)${weighted && votes>1?', please vote starting with your highest':''}`});
     
   }
 }
