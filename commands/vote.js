@@ -149,11 +149,18 @@ const castvote = {
 
     if(!poll.voters[interaction.user]) poll.voters[interaction.user] = []
 
+    // TODO - handle votes out of entries range (if set)
+
+    // if no votes left
     if(poll.votes<=poll.voters[interaction.user].length){
       await interaction.reply({content:`Sorry, you've already used all your votes!`,ephemeral:true})
-    } else if(poll.voters[interaction.user].includes(vote)){
+    }
+    // if already voted for this entry
+    else if(poll.voters[interaction.user].includes(vote)){
       await interaction.reply({content:`Sorry, you've already voted for #${vote}. Please vote for a different entry, you have ${poll.votes-poll.voters[interaction.user].length} vote(s) left`,ephemeral:true})
-    } else{
+    }
+    // vote!
+    else{
       poll.voters[interaction.user].push(vote)
 
       if(!poll.votesCast) poll.votesCast = 0
