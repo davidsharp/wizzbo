@@ -32,7 +32,7 @@ const pollComplete = poll => {
     {}
   )
   const rankings = calculateRankings(results)
-  let resultText = 'The votes are in!\n'
+  let resultText = '**The votes are in!**\n'
   resultText += (rankings[0].entries.length===1?
     `The winner is entry #${rankings[0].entries[0]} with ${rankings[0].votes} points`:
     `Tied for ${ordinalify(1)} place with ${rankings[0].votes} points each are entries ${
