@@ -5,13 +5,15 @@ const ServerInfo = require('./serverInfo')
 const UserInfo = require('./userInfo')
 const Scry = require('./scry')
 const Vote = require('./vote')
+const FlagRole = require('./flag-role')
 
 const commands = [
   Ping,
   Scry,
   ServerInfo,
   UserInfo,
-  Vote
+  Vote,
+  FlagRole,
 ]
 
 const collection = new Collection()
