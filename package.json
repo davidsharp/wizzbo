@@ -2,10 +2,11 @@
   "name": "wizzbo",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "author": "davidsharp <hello@davidsharp.codes>",
   "license": "MIT",
   "engines": {
-    "node": "16.x"
+    "node": "18.x"
   },
   "scripts": {
     "start": "node index.js",
@@ -14,6 +15,7 @@
   },
   "dependencies": {
     "@discordjs/builders": "^0.6.0",
+    "@discordjs/core": "^0.6.0",
     "@discordjs/rest": "^0.1.0-canary.0",
     "discord-api-types": "^0.23.1",
     "discord.js": "^14.3.0",

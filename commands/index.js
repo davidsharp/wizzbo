@@ -1,10 +1,10 @@
-const { Collection } = require('discord.js')
+import { Collection } from '@discordjs/core'
 
-const Ping = require('./ping')
-const ServerInfo = require('./serverInfo')
-const UserInfo = require('./userInfo')
-const Scry = require('./scry')
-const Vote = require('./vote')
+import Ping from './ping.js'
+import ServerInfo from './serverInfo.js'
+import UserInfo from './userInfo.js'
+import Scry from './scry.js'
+import Vote from './vote.js'
 
 const commands = [
   Ping,
@@ -12,11 +12,11 @@ const commands = [
   ServerInfo,
   UserInfo,
   Vote
-]
+].map(c=>c.data.toJSON())
 
 const collection = new Collection()
 commands.forEach(
   c => collection.set(c.data.name, c)
 )
 
-module.exports = {commands:commands.map(c=>c.data.toJSON()), collection}
+export {commands, collection}

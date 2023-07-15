@@ -1,7 +1,7 @@
-const { SlashCommandBuilder } = require('@discordjs/builders')
+import { SlashCommandBuilder } from '@discordjs/builders'
 
-const path = require('path')
-const Storage = require('node-storage')
+import path from 'path'
+import Storage from 'node-storage'
 const store = new Storage(path.resolve(__dirname,'..','poll_storage',`store.json`))
 
 // functions
@@ -213,4 +213,4 @@ const vote = {
 }
 
 // todo, turn into subcommands?
-module.exports = vote
+export default vote

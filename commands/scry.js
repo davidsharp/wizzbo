@@ -1,5 +1,5 @@
-const { SlashCommandBuilder } = require('@discordjs/builders')
-const fraktur = require('fraktur');
+import { SlashCommandBuilder } from '@discordjs/builders'
+import fraktur from 'fraktur'
 
 const responses = [
   `it is doubtful`,
@@ -30,7 +30,7 @@ const fatedAdjectives = [
   `bleak`,`promising`,`surprising`
 ]
 
-module.exports = {
+export default {
   data: new SlashCommandBuilder()
     .setName('scry')
     .setDescription('see the future 🔮')

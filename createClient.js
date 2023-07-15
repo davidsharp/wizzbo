@@ -1,5 +1,5 @@
 // Require the necessary discord.js classes
-const { Client, Intents } = require('discord.js')
+import { Client, Intents } from '@discordjs/core'
 
 const createClient = ({name, config, collection}) => {
   // Create a new client instance
@@ -39,4 +39,4 @@ const createClient = ({name, config, collection}) => {
   client.login(config.token);
 }
 
-module.exports = createClient
+export default createClient
