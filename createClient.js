@@ -1,9 +1,9 @@
 // Require the necessary discord.js classes
-import { Client, Intents } from '@discordjs/core'
+import { Client, GatewayIntentBits } from 'discord.js'
 
 const createClient = ({name, config, collection}) => {
   // Create a new client instance
-  const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
+  const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
   client.commands = collection
 

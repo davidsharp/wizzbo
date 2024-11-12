@@ -1,8 +1,8 @@
-import { SlashCommandBuilder } from '@discordjs/builders'
+import { SlashCommandBuilder } from 'discord.js'
 
 import path from 'path'
 import Storage from 'node-storage'
-const store = new Storage(path.resolve(__dirname,'..','poll_storage',`store.json`))
+const store = new Storage(path.resolve(import.meta.dirname,'..','poll_storage',`store.json`))
 
 // functions
 const initPoll = ({players,entries,votes,weighted,guildId,channelId}) => {
@@ -108,12 +108,12 @@ const setupvote = {
 
     initPoll({players,entries,votes,weighted,guildId,channelId})
 
-    if(votes==3 && weighted)await interaction.reply({content:`**✨ Hello chaps, time to vote! ✨ 
+    if(votes==3 && weighted)await interaction.reply({content:`**✨ Hello chaps, time to vote! ✨
 Please vote for your most favourite-est first, then your second most favourite, then your third.**
 You do this by typing in /vote cast and adding the entry number next to it before hitting return. You do this individually for vote (so ${votes} times).
 Good luck to all of our brave contenders`});
     else await interaction.reply({content:`A poll has been created, ${entries?`please vote from 1-${entries},`:''} you have ${votes} vote(s)${weighted && votes>1?', please vote starting with your highest':''}`});
-    
+
   }
 }
 
@@ -175,7 +175,7 @@ const castvote = {
       if(finalVote) await interaction.followUp({content:pollComplete(poll),ephemeral:false})
     }
 
-    
+
   }
 }
 

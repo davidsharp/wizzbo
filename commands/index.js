@@ -1,4 +1,4 @@
-import { Collection } from '@discordjs/core'
+import { Collection } from 'discord.js'
 
 import Ping from './ping.js'
 import ServerInfo from './serverInfo.js'
@@ -12,11 +12,11 @@ const commands = [
   ServerInfo,
   UserInfo,
   Vote
-].map(c=>c.data.toJSON())
+]
 
 const collection = new Collection()
 commands.forEach(
-  c => collection.set(c.data.name, c)
+  c => collection.set(c.data.name, c.data.toJSON())
 )
 
 export {commands, collection}

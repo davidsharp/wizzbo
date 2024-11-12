@@ -6,7 +6,7 @@
   "author": "davidsharp <hello@davidsharp.codes>",
   "license": "MIT",
   "engines": {
-    "node": "18.x"
+    "node": ">=20.11"
   },
   "scripts": {
     "start": "node index.js",
@@ -14,10 +14,7 @@
     "deploy-kwivo": "node deploy-commands.js -s=kwivo vote"
   },
   "dependencies": {
-    "@discordjs/builders": "^0.6.0",
     "@discordjs/core": "^0.6.0",
-    "@discordjs/rest": "^0.1.0-canary.0",
-    "discord-api-types": "^0.23.1",
     "discord.js": "^14.3.0",
     "express": "^4.17.1",
     "fraktur": "^1.1.0",

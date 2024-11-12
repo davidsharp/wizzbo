@@ -15,4 +15,4 @@ try {
 }
 
 createClient({name:'wizzbo',config,collection})
-if(config.kwivo)createClient({name:'kwivo',config:typeof config.kwivo == 'string'?JSON.parse(config.kwivo):config.kwivo,collection})
+//if(config.kwivo)createClient({name:'kwivo',config:typeof config.kwivo == 'string'?JSON.parse(config.kwivo):config.kwivo,collection})
