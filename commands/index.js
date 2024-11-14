@@ -16,7 +16,7 @@ const commands = [
 
 const collection = new Collection()
 commands.forEach(
-  c => collection.set(c.data.name, c.data.toJSON())
+  c => collection.set(c.data.name, c)
 )
 
 export {commands, collection}

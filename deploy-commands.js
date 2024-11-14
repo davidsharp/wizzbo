@@ -31,7 +31,7 @@ if (argv.h) {
       config[argv.s||argv.sub]:config
     )
 
-  const rest = new REST({ version: '9' }).setToken(token);
+  const rest = new REST().setToken(token);
 
   rest.put(Routes.applicationCommands(clientId), { body: deployedCommands })
     .then(() => console.log(`Successfully registered application commands:
